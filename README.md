@@ -1,5 +1,3 @@
----
-
 # 🏠 Personal Home Server Infrastructure - Hackathon Project
 
 A **comprehensive home server solution** built on repurposed ThinkPad T540p hardware, implementing enterprise-grade services and security configurations. This hackathon project demonstrates full-stack infrastructure deployment, combining cloud services, networking, security hardening, and modern web technologies.
