@@ -1,6 +1,6 @@
 ---
 
-# 🏠 Personal Home Server Infrastructure - Personal Project
+# 🏠 Personal Home Server Infrastructure - Hackathon Project
 
 A **comprehensive home server solution** built on repurposed ThinkPad T540p hardware, implementing enterprise-grade services and security configurations. This hackathon project demonstrates full-stack infrastructure deployment, combining cloud services, networking, security hardening, and modern web technologies.
 
@@ -49,8 +49,9 @@ Built a **production-ready home server** that transforms an old laptop into a po
 - **🔐 SSH Security:** Hardened SSH configuration with key-based auth
 - **🛡️ SSL/TLS:** Automatic certificate management via Let's Encrypt
 - **🌐 DNS Management:** Cloudflare DNS with DDNS updates
-- **� VPN Support:** WireGuard integration capability
+- **🔒 VPN Access:** Tailscale mesh VPN for secure remote access
 - **📊 Monitoring:** System resource monitoring and logging
+- **🤖 ML Processing:** CUDA-enabled environment for TinyML applications
 
 ---
 
@@ -78,14 +79,14 @@ Built a **production-ready home server** that transforms an old laptop into a po
 │  │  ┌───────────────────────────────────────────────────────┤
 │  │  │            NGINX REVERSE PROXY                        │
 │  │  │         (High-Performance + SSL Termination)          │
-│  │  └─────┬─────────────────────┬───────────────────────────┘
-│  │        │                     │                          
-│  │  │  ┌─────▼──────┐       ┌─────▼──────┐       ┌─────▼──────┐    
-│  │  │  │ NEXTCLOUD  │       │ PORTFOLIO  │       │  TINY ML   │    
-│  │  │  │   :8080    │       │   :3000    │       │   :8888    │    
-│  │  │  │            │       │            │       │            │    
-│  │  │  │ Files/Sync │       │  Website   │       │ NVIDIA GPU │    
-│  │  │  └────────────┘       └────────────┘       └────────────┘                   
+│  │  └─────┬─────────────────────┬─────────────────────┬───────────┘
+│  │        │                     │                     │          
+│  │  ┌─────▼──────┐       ┌─────▼──────┐       ┌─────▼──────┐    
+│  │  │ NEXTCLOUD  │       │ PORTFOLIO  │       │  TINY ML   │    
+│  │  │   :8080    │       │   :3000    │       │   :8888    │    
+│  │  │            │       │            │       │            │    
+│  │  │ Files/Sync │       │  Website   │       │ NVIDIA GPU │    
+│  │  └────────────┘       └────────────┘       └────────────┘                   
 │  │                                                         
 │  │  ┌──────────────────────────────────────────────────────┤
 │  │  │          REMOTE ACCESS LAYER                         │
@@ -935,17 +936,16 @@ echo "DNS updated to $CURRENT_IP"
 }
 ```
 
-### **SSH Mobile Access**
+### **SSH Mobile Access via Tailscale**
 ```bash
-# Termux (Android) configuration
-pkg install openssh
-ssh-keygen -t rsa -b 4096
+# Install Tailscale on mobile device (iOS/Android)
+# Download from App Store / Play Store
 
-# Copy public key to server
-ssh-copy-id -p 22022 -i ~/.ssh/id_rsa.pub anson@homeserver.anson.dev
+# Connect to server via Tailscale IP
+ssh -p 22022 anson@[tailscale-ip]
 
-# Connect from mobile
-ssh -p 22022 anson@homeserver.anson.dev
+# Or use magic DNS (if enabled)
+ssh -p 22022 anson@homeserver
 ```
 
 ---
@@ -954,23 +954,26 @@ ssh -p 22022 anson@homeserver.anson.dev
 
 ### **Innovation Points**
 - **🏆 Cost-Effective Solution:** Repurposed old laptop as enterprise-grade server
-- **🔒 Zero Trust Security:** Cloudflare Tunnel eliminates port forwarding risks
-- **⚡ Performance Optimization:** Caddy's modern HTTP stack with automatic compression
+- **🔒 Zero Trust Security:** Cloudflare Tunnel + Tailscale VPN for secure access
+- **⚡ Performance Optimization:** Nginx high-performance reverse proxy
+- **🤖 AI/ML Integration:** NVIDIA GPU acceleration for TinyML workloads
 - **🌍 Global Accessibility:** CDN integration for worldwide fast access
 - **🔧 Automation:** Comprehensive scripts for maintenance and monitoring
 
 ### **Technical Excellence**
 - **📊 Service Reliability:** 99.9% uptime through systemd service management
-- **🛡️ Multi-Layer Security:** Firewall + SSH hardening + Intrusion detection
+- **🛡️ Multi-Layer Security:** Firewall + SSH hardening + Intrusion detection + VPN
 - **📈 Scalability:** Docker-based services for easy scaling
 - **📱 Cross-Platform Access:** Web, mobile, and desktop client support
 - **💾 Data Redundancy:** Automated backup system with retention policies
+- **🎯 Portfolio Showcase:** Professional website hosting with optimized performance
+- **🤖 ML Capabilities:** GPU-accelerated machine learning inference and training
 
 ### **Problem-Solving Approach**
 1. **Hardware Constraints:** Optimized ThinkPad T540p for 24/7 server operation
 2. **Security Challenges:** Implemented enterprise-grade security on home network
-3. **Performance Issues:** Used Caddy's modern features for optimal web serving
-4. **Accessibility Requirements:** Cloudflare Tunnel for secure external access
+3. **Performance Issues:** Used Nginx's high-performance features for optimal web serving
+4. **Accessibility Requirements:** Cloudflare Tunnel + Tailscale VPN for secure external access
 5. **Maintenance Complexity:** Automated monitoring and backup solutions
 
 ---
@@ -986,9 +989,12 @@ ssh -p 22022 anson@homeserver.anson.dev
 ```
 
 ### **Service Response Times**
-- **Caddy Web Server:** ~5ms local response
+- **Nginx Web Server:** ~3ms local response
 - **Nextcloud:** ~200-500ms (depending on operation)
+- **Portfolio Website:** ~10-50ms (static content)
+- **TinyML Inference:** ~5-100ms (depending on model complexity)
 - **RustDesk Connection:** ~50-100ms latency
+- **Tailscale VPN:** ~5-20ms additional latency
 - **Cloudflare Tunnel:** ~20-50ms additional latency
 
 ### **Uptime Statistics**
@@ -1100,10 +1106,11 @@ docker exec nextcloud-db mysqldump -u root -p nextcloud > backup.sql
 ## 📚 Resources & Documentation
 
 ### **Official Documentation**
-- **[Caddy Server Documentation](https://caddyserver.com/docs/)**
+- **[Nginx Documentation](https://nginx.org/en/docs/)**
 - **[Nextcloud Administration Manual](https://docs.nextcloud.com/server/latest/admin_manual/)**
 - **[Cloudflare Tunnel Documentation](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/)**
 - **[RustDesk Documentation](https://rustdesk.com/docs/)**
+- **[Tailscale Documentation](https://tailscale.com/kb/)**
 
 ### **Community Resources**
 - **[r/selfhosted](https://reddit.com/r/selfhosted)** - Self-hosting community
@@ -1114,7 +1121,7 @@ docker exec nextcloud-db mysqldump -u root -p nextcloud > backup.sql
 - **Linux Server Administration** - Red Hat System Administration
 - **Docker & Containerization** - Docker official tutorials
 - **Network Security** - CISSP/CEH certification materials
-- **Web Server Management** - Nginx/Apache/Caddy comparisons
+- **Web Server Management** - Nginx/Apache configuration and optimization
 
 ---
 
@@ -1130,10 +1137,11 @@ This project is licensed under MIT License - see LICENSE file for details.
 - **Cloudflare** for generous free tier services
 
 ### **Open Source Projects Used**
-- **[Caddy Server](https://github.com/caddyserver/caddy)** - Modern web server
+- **[Nginx](https://github.com/nginx/nginx)** - High-performance web server
 - **[Nextcloud](https://github.com/nextcloud/server)** - Self-hosted cloud platform
 - **[RustDesk](https://github.com/rustdesk/rustdesk)** - Remote desktop software
 - **[Docker](https://github.com/docker/docker-ce)** - Containerization platform
+- **[Tailscale](https://github.com/tailscale/tailscale)** - Secure mesh VPN
 
 ---
 
