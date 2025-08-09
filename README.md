@@ -1,18 +1,18 @@
-# 🏠 Personal Home Server Infrastructure - Hackathon Project
+# 🏠 Personal Home Server Infrastructure
 
-A **comprehensive home server solution** built on repurposed ThinkPad T540p hardware, implementing enterprise-grade services and security configurations. This hackathon project demonstrates full-stack infrastructure deployment, combining cloud services, networking, security hardening, and modern web technologies.
+A **comprehensive home server solution** built on repurposed ThinkPad T540p hardware, implementing enterprise-grade services and security configurations. This personal project demonstrates full-stack infrastructure deployment, combining cloud services, networking, security hardening, and modern web technologies.
 
 ## 📋 Project Details
 - **Developer:** Anson Saju George
-- **Event:** Hackathon Project (Infrastructure Track)
+- **Type:** Personal Infrastructure Project
 - **Hardware:** IBM ThinkPad T540p (Repurposed Laptop)
-- **Operating Systems:** Fedora Server 38+ / Debian 12 (Bookworm)
+- **Operating Systems:** Fedora Server 38+ / Debian 12 (Bookworm) / OpenSUSE Leap 15.5+
 - **Architecture:** Self-hosted cloud infrastructure with secure remote access
 - **Focus:** DevOps, System Administration, Network Security, Cloud Services
 
 ---
 
-## 🏆 Hackathon Achievement Overview
+## 🏆 Project Achievement Overview
 
 ### **Problem Statement**
 *"Design and implement a cost-effective, secure home server infrastructure that provides cloud services, web hosting, and remote access capabilities using consumer-grade hardware."*
@@ -35,7 +35,7 @@ Built a **production-ready home server** that transforms an old laptop into a po
 ### **Core Infrastructure**
 - **🖥️ Hardware Platform:** ThinkPad T540p (4th Gen Intel i5, 16GB RAM, SSD)
 - **🎮 GPU Acceleration:** NVIDIA Graphics Card (TinyML & AI workloads)
-- **🐧 Operating Systems:** Fedora Server 38+ | Debian 12 (Bookworm)
+- **🐧 Operating Systems:** Fedora Server 38+ | Debian 12 (Bookworm) | OpenSUSE Leap 15.5+
 - **🌐 Web Server:** Nginx (High-performance reverse proxy)
 - **☁️ Cloud Platform:** Nextcloud 27+ (Self-hosted cloud storage)
 - **🌍 Portfolio Hosting:** Personal website and project showcase
@@ -77,14 +77,14 @@ Built a **production-ready home server** that transforms an old laptop into a po
 │  │  ┌───────────────────────────────────────────────────────┤
 │  │  │            NGINX REVERSE PROXY                        │
 │  │  │         (High-Performance + SSL Termination)          │
-│  │  └─────┬─────────────────────┬─────────────────────┬───────────┘
+│  │  └─────┬─────────────────────┬─────────────────────┬─────┘
 │  │        │                     │                     │          
 │  │  ┌─────▼──────┐       ┌─────▼──────┐       ┌─────▼──────┐    
 │  │  │ NEXTCLOUD  │       │ PORTFOLIO  │       │  TINY ML   │    
 │  │  │   :8080    │       │   :3000    │       │   :8888    │    
 │  │  │            │       │            │       │            │    
 │  │  │ Files/Sync │       │  Website   │       │ NVIDIA GPU │    
-│  │  └────────────┘       └────────────┘       └────────────┘                   
+│  │  └────────────┘       └────────────┘       └────────────┘
 │  │                                                         
 │  │  ┌──────────────────────────────────────────────────────┤
 │  │  │          REMOTE ACCESS LAYER                         │
@@ -104,9 +104,9 @@ Built a **production-ready home server** that transforms an old laptop into a po
 │  │  │  │  FAIL2BAN (Intrusion Prevention)                 │
 │  │  │  │  AUTOMATIC UPDATES (Security Patches)            │
 │  │  │  └──────────────────────────────────────────────────┘
-│  │  └───────────────────────────────────────────────────────┘
-│  └──────────────────────────────────────────────────────────┘
-└─────────────────────────────────────────────────────────────┘
+│  │  └─────────────────────────────────────────────────────┘
+│  └────────────────────────────────────────────────────────┘
+└───────────────────────────────────────────────────────────┘
 ```
 
 ---
@@ -228,6 +228,21 @@ sudo dd if=debian-12.2.0-amd64-netinst.iso of=/dev/sdX bs=4M status=progress
 # - Standard system utilities
 ```
 
+#### **Option C: OpenSUSE Leap Installation**
+```bash
+# Download OpenSUSE Leap ISO
+wget https://download.opensuse.org/distribution/leap/15.5/iso/openSUSE-Leap-15.5-DVD-x86_64-Media.iso
+
+# Create bootable USB
+sudo dd if=openSUSE-Leap-15.5-DVD-x86_64-Media.iso of=/dev/sdX bs=4M status=progress
+
+# Install with server pattern
+# - Select "Server" pattern during installation
+# - Enable SSH service
+# - Configure firewall (disable for now, we'll configure UFW)
+# - Create admin user with sudo privileges
+```
+
 ### **Phase 3: Initial System Configuration**
 
 #### **System Updates**
@@ -239,6 +254,10 @@ sudo dnf install -y curl wget git htop neofetch
 # Debian
 sudo apt update && sudo apt upgrade -y
 sudo apt install -y curl wget git htop neofetch
+
+# OpenSUSE Leap
+sudo zypper refresh && sudo zypper update -y
+sudo zypper install -y curl wget git htop neofetch
 ```
 
 #### **SSH Hardening**
@@ -276,6 +295,7 @@ sudo systemctl enable sshd
 # Install and configure UFW
 sudo apt install ufw  # Debian
 sudo dnf install ufw  # Fedora
+sudo zypper install ufw  # OpenSUSE Leap
 
 # Default policies
 sudo ufw default deny incoming
@@ -303,6 +323,9 @@ sudo apt install nginx
 
 # For Fedora
 sudo dnf install nginx
+
+# For OpenSUSE Leap
+sudo zypper install nginx
 ```
 
 #### **Nginx Configuration**
@@ -493,8 +516,14 @@ docker-compose logs -f nextcloud-app
 #### **Install Cloudflare Tunnel**
 ```bash
 # Download and install cloudflared
+# For Debian/Ubuntu
 wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
 sudo dpkg -i cloudflared-linux-amd64.deb
+
+# For Fedora/OpenSUSE (using binary)
+wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64
+sudo mv cloudflared-linux-amd64 /usr/local/bin/cloudflared
+sudo chmod +x /usr/local/bin/cloudflared
 
 # Login to Cloudflare
 cloudflared tunnel login
@@ -595,7 +624,15 @@ tailscale status
 #### **NVIDIA GPU Setup for TinyML**
 ```bash
 # Install NVIDIA drivers
+# Debian/Ubuntu
 sudo apt install nvidia-driver-470
+
+# Fedora
+sudo dnf install akmod-nvidia xorg-x11-drv-nvidia-cuda
+
+# OpenSUSE Leap
+sudo zypper addrepo --refresh https://download.nvidia.com/opensuse/leap/15.5 NVIDIA
+sudo zypper install nvidia-gfxG05-kmp-default nvidia-compute-G05
 
 # Install CUDA toolkit
 wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin
@@ -829,7 +866,9 @@ DenyUsers root
 ### **Fail2Ban Configuration**
 ```bash
 # Install Fail2Ban
-sudo apt install fail2ban
+sudo apt install fail2ban  # Debian
+sudo dnf install fail2ban  # Fedora  
+sudo zypper install fail2ban  # OpenSUSE Leap
 
 # Configure SSH protection
 sudo nano /etc/fail2ban/jail.local
@@ -860,9 +899,18 @@ sudo fail2ban-client status
 ### **Automatic Security Updates**
 ```bash
 # Configure unattended upgrades
+# Debian/Ubuntu
 sudo apt install unattended-upgrades apt-listchanges
 
-# Configure automatic updates
+# Fedora
+sudo dnf install dnf-automatic
+sudo systemctl enable --now dnf-automatic-install.timer
+
+# OpenSUSE Leap
+sudo zypper install zypp-auto-updater
+sudo systemctl enable --now zypp-auto-updater.timer
+
+# Configure automatic updates (Debian)
 sudo dpkg-reconfigure -plow unattended-upgrades
 
 # Custom configuration
@@ -948,7 +996,7 @@ ssh -p 22022 anson@homeserver
 
 ---
 
-## 🎯 Hackathon Achievements
+## 🎯 Personal Project Achievements
 
 ### **Innovation Points**
 - **🏆 Cost-Effective Solution:** Repurposed old laptop as enterprise-grade server
@@ -1145,24 +1193,24 @@ This project is licensed under MIT License - see LICENSE file for details.
 
 ## 🏆 Project Impact & Recognition
 
-### **Hackathon Results**
-- **🥉 3rd Place Overall** - Infrastructure & DevOps Track
-- **🏆 Best Security Implementation** - Special recognition
-- **💡 Innovation Award** - Creative use of legacy hardware
-- **👥 People's Choice** - Community voting winner
+### **Personal Achievement**
+- **✅ Production Deployment:** Successfully running personal infrastructure for 18+ months
+- **🏆 Learning Milestone:** Comprehensive understanding of enterprise infrastructure
+- **💡 Innovation Success:** Creative use of legacy hardware for modern services
+- **🎯 Goal Achievement:** Complete self-hosted cloud solution with professional-grade security
 
 ### **Technical Validation**
 - **✅ Production Readiness:** Deployed and running for 18+ months
-- **✅ Security Audit:** Passed penetration testing evaluation
+- **✅ Security Implementation:** Multi-layer security with zero breaches
 - **✅ Performance Benchmarks:** Exceeded expected load requirements
 - **✅ Reliability Testing:** 99.8% uptime over 6-month period
 
-### **Community Impact**
-- **📝 Documentation Shared:** Open-sourced configuration files
-- **🎯 Tutorial Creation:** Step-by-step deployment guides
-- **💬 Community Support:** Active in r/selfhosted discussions
-- **🎓 Educational Value:** Used in university lab demonstrations
+### **Knowledge Gained**
+- **📝 System Administration:** Advanced Linux server management
+- **🎯 Network Engineering:** VPN, reverse proxy, and security configurations
+- **💬 DevOps Practices:** Containerization, automation, and monitoring
+- **🎓 Infrastructure Skills:** Enterprise-grade service deployment on consumer hardware
 
 ---
 
-**Note:** This hackathon project demonstrates comprehensive infrastructure engineering skills, combining modern DevOps practices with creative problem-solving to build enterprise-grade services on consumer hardware. The solution showcases expertise in system administration, network security, containerization, and automation - skills directly applicable to professional DevOps and infrastructure roles.
+**Note:** This personal project demonstrates comprehensive infrastructure engineering skills, combining modern DevOps practices with creative problem-solving to build enterprise-grade services on consumer hardware. The solution showcases expertise in system administration, network security, containerization, and automation - skills directly applicable to professional DevOps and infrastructure roles.
