@@ -1,6 +1,6 @@
 ---
 
-# 🏠 Personal Home Server Infrastructure - Hackathon Project
+# 🏠 Personal Home Server Infrastructure - Personal Project
 
 A **comprehensive home server solution** built on repurposed ThinkPad T540p hardware, implementing enterprise-grade services and security configurations. This hackathon project demonstrates full-stack infrastructure deployment, combining cloud services, networking, security hardening, and modern web technologies.
 
@@ -58,27 +58,27 @@ Built a **production-ready home server** that transforms an old laptop into a po
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                    INTERNET                                 │
-└─────────────────────┬───────────────────────────────────────┘
-                      │
-        ┌─────────────▼──────────────┐
-        │      Cloudflare CDN        │
-        │   (DNS + Security + SSL)   │
-        └─────────────┬──────────────┘
-                      │
-        ┌─────────────▼──────────────┐
-        │    Cloudflare Tunnel       │
-        │  (Secure Zero-Trust Proxy) │
-        └─────────────┬──────────────┘
-                      │
-┌─────────────────────▼───────────────────────────────────────┐
-│                HOME NETWORK                                 │
-│  ┌─────────────────────────────────────────────────────────┤
-│  │           THINKPAD T540P SERVER                         │
-│  │  ┌─────────────────────────────────────────────────────┤
-│  │  │            NGINX REVERSE PROXY                       │
-│  │  │         (High-Performance + SSL Termination)        │
-│  │  └─────┬─────────────────────┬─────────────────────────┘
+│                     INTERNET                                │
+└──────────────────────────┬──────────────────────────────────┘
+                           │
+             ┌─────────────▼──────────────┐
+             │      Cloudflare CDN        │
+             │   (DNS + Security + SSL)   │
+             └─────────────┬──────────────┘
+                           │
+             ┌─────────────▼──────────────┐
+             │    Cloudflare Tunnel       │
+             │  (Secure Zero-Trust Proxy) │
+             └─────────────┬──────────────┘
+                           │
+┌──────────────────────────▼──────────────────────────────────┐
+│                     HOME NETWORK                            │
+│  ┌──────────────────────────────────────────────────────────┤
+│  │             THINKPAD T540P SERVER                        │
+│  │  ┌───────────────────────────────────────────────────────┤
+│  │  │            NGINX REVERSE PROXY                        │
+│  │  │         (High-Performance + SSL Termination)          │
+│  │  └─────┬─────────────────────┬───────────────────────────┘
 │  │        │                     │                          
 │  │  │  ┌─────▼──────┐       ┌─────▼──────┐       ┌─────▼──────┐    
 │  │  │  │ NEXTCLOUD  │       │ PORTFOLIO  │       │  TINY ML   │    
@@ -87,26 +87,26 @@ Built a **production-ready home server** that transforms an old laptop into a po
 │  │  │  │ Files/Sync │       │  Website   │       │ NVIDIA GPU │    
 │  │  │  └────────────┘       └────────────┘       └────────────┘                   
 │  │                                                         
-│  │  ┌─────────────────────────────────────────────────────┤
-│  │  │          REMOTE ACCESS LAYER                        │
-│  │  │  ┌──────────────┐    ┌──────────────┐               │
-│  │  │  │  RUSTDESK    │    │  TAILSCALE   │               │
-│  │  │  │   :21117     │    │   VPN MESH   │               │
-│  │  │  │              │    │              │               │
-│  │  │  │ Open Source  │    │  Secure SSH  │               │
-│  │  │  └──────────────┘    └──────────────┘               │
-│  │  └─────────────────────────────────────────────────────┘
+│  │  ┌──────────────────────────────────────────────────────┤
+│  │  │          REMOTE ACCESS LAYER                         │
+│  │  │  ┌──────────────┐    ┌──────────────┐                │
+│  │  │  │  RUSTDESK    │    │  TAILSCALE   │                │
+│  │  │  │   :21117     │    │   VPN MESH   │                │
+│  │  │  │              │    │              │                │
+│  │  │  │ Open Source  │    │  Secure SSH  │                │
+│  │  │  └──────────────┘    └──────────────┘                │
+│  │  └──────────────────────────────────────────────────────┘
 │  │                                                         
 │  │  ┌─────────────────────────────────────────────────────┤
 │  │  │              SECURITY LAYER                         │
 │  │  │  ┌──────────────────────────────────────────────────┤
-│  │  │  │  SSH HARDENED (Port 22022, Key Auth Only)       │
-│  │  │  │  UFW FIREWALL (Strict Rules)                    │
-│  │  │  │  FAIL2BAN (Intrusion Prevention)                │
-│  │  │  │  AUTOMATIC UPDATES (Security Patches)           │
+│  │  │  │  SSH HARDENED (Port 22022, Key Auth Only)        │
+│  │  │  │  UFW FIREWALL (Strict Rules)                     │
+│  │  │  │  FAIL2BAN (Intrusion Prevention)                 │
+│  │  │  │  AUTOMATIC UPDATES (Security Patches)            │
 │  │  │  └──────────────────────────────────────────────────┘
-│  │  └─────────────────────────────────────────────────────┘
-│  └─────────────────────────────────────────────────────────┘
+│  │  └───────────────────────────────────────────────────────┘
+│  └──────────────────────────────────────────────────────────┘
 └─────────────────────────────────────────────────────────────┘
 ```
 
