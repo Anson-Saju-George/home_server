@@ -1,12 +1,13 @@
 # 🏠 Personal Home Server Infrastructure
 
-A **comprehensive home server solution** built on repurposed ThinkPad T540p hardware, implementing enterprise-grade services and security configurations. This personal project demonstrates full-stack infrastructure deployment, combining cloud services, networking, security hardening, and modern web technologies.
+A **comprehensive home server solution** built on repurposed HP OMEN 16 (2022) hardware, implementing enterprise-grade services and security configurations. This personal project demonstrates full-stack infrastructure deployment, combining cloud services, networking, security hardening, and modern web technologies.
 
 ## 📋 Project Details
+
 - **Developer:** Anson Saju George
 - **Type:** Personal Infrastructure Project
-- **Hardware:** IBM ThinkPad T540p (Repurposed Laptop)
-- **Operating Systems:** Fedora Server 38+ / Debian 12 (Bookworm) / OpenSUSE Leap 15.5+
+- **Hardware:** HP OMEN 16 (2022) (Repurposed Laptop)
+- **Operating Systems:** Fedora Server 42+ / Debian 12 (Bookworm) / OpenSUSE Leap 15.5+
 - **Architecture:** Self-hosted cloud infrastructure with secure remote access
 - **Focus:** DevOps, System Administration, Network Security, Cloud Services
 
@@ -15,14 +16,17 @@ A **comprehensive home server solution** built on repurposed ThinkPad T540p hard
 ## 🏆 Project Achievement Overview
 
 ### **Problem Statement**
-*"Design and implement a cost-effective, secure home server infrastructure that provides cloud services, web hosting, and remote access capabilities using consumer-grade hardware."*
+
+_"Design and implement a cost-effective, secure home server infrastructure that provides cloud services, web hosting, and remote access capabilities using consumer-grade hardware."_
 
 ### **Solution Architecture**
-Built a **production-ready home server** that transforms an old laptop into a powerful infrastructure platform, providing:
+
+Built a **production-ready home server** that transforms an HP OMEN 16 (2022) laptop into a powerful infrastructure platform, providing:
+
 - **Private Cloud Storage** (Nextcloud)
 - **High-Performance Web Server** (Nginx with reverse proxy)
 - **Portfolio Website Hosting** (Personal portfolio and projects)
-- **Machine Learning Capabilities** (NVIDIA GPU acceleration for TinyML)
+- **Machine Learning Capabilities** (NVIDIA GPU acceleration for TinyML — GeForce RTX 3060)
 - **Secure Remote Access** (RustDesk + Tailscale VPN)
 - **Enterprise Security** (Cloudflare Tunnel, SSH hardening)
 - **Network Security** (Firewall configurations)
@@ -33,9 +37,10 @@ Built a **production-ready home server** that transforms an old laptop into a po
 ## 🛠️ Technology Stack & Infrastructure
 
 ### **Core Infrastructure**
-- **🖥️ Hardware Platform:** ThinkPad T540p (4th Gen Intel i5, 16GB RAM, SSD)
-- **🎮 GPU Acceleration:** NVIDIA Graphics Card (TinyML & AI workloads)
-- **🐧 Operating Systems:** Fedora Server 38+ | Debian 12 (Bookworm) | OpenSUSE Leap 15.5+
+
+- **🖥️ Hardware Platform:** HP OMEN 16 (2022) — modern laptop repurposed as server (NVMe SSD, 16–32GB RAM, NVIDIA GeForce RTX 3060)
+- **🎮 GPU Acceleration:** NVIDIA GeForce RTX 3060 (CUDA-enabled for ML workloads)
+- **🐧 Operating Systems:** Fedora Server 42+ | Debian 12 (Bookworm) | OpenSUSE Leap 15.5+
 - **🌐 Web Server:** Nginx (High-performance reverse proxy)
 - **☁️ Cloud Platform:** Nextcloud 27+ (Self-hosted cloud storage)
 - **🌍 Portfolio Hosting:** Personal website and project showcase
@@ -43,13 +48,14 @@ Built a **production-ready home server** that transforms an old laptop into a po
 - **🖥️ Remote Access:** RustDesk (Open-source) + Tailscale VPN
 
 ### **Security & Networking**
+
 - **🔥 Firewall:** UFW (Uncomplicated Firewall) + iptables
 - **🔐 SSH Security:** Hardened SSH configuration with key-based auth
 - **🛡️ SSL/TLS:** Automatic certificate management via Let's Encrypt
 - **🌐 DNS Management:** Cloudflare DNS with DDNS updates
 - **🔒 VPN Access:** Tailscale mesh VPN for secure remote access
 - **📊 Monitoring:** System resource monitoring and logging
-- **🤖 ML Processing:** CUDA-enabled environment for TinyML applications
+- **🤖 ML Processing:** CUDA-enabled environment for TinyML applications (RTX 3060)
 
 ---
 
@@ -73,7 +79,7 @@ Built a **production-ready home server** that transforms an old laptop into a po
 ┌──────────────────────────▼──────────────────────────────────┐
 │                     HOME NETWORK                            │
 │  ┌──────────────────────────────────────────────────────────┤
-│  │             THINKPAD T540P SERVER                        │
+│  │             HP OMEN 16 (2022) SERVER                     │
 │  │  ┌───────────────────────────────────────────────────────┤
 │  │  │            NGINX REVERSE PROXY                        │
 │  │  │         (High-Performance + SSL Termination)          │
@@ -114,7 +120,9 @@ Built a **production-ready home server** that transforms an old laptop into a po
 ## ⭐ Key Features & Services
 
 ### **🌐 Web Services**
+
 - **Nextcloud Personal Cloud**
+
   - File synchronization across devices
   - Calendar and contact management
   - Collaborative document editing
@@ -122,6 +130,7 @@ Built a **production-ready home server** that transforms an old laptop into a po
   - Mobile app integration
 
 - **Portfolio Website**
+
   - Personal project showcase
   - Professional resume and skills
   - Blog and technical articles
@@ -129,6 +138,7 @@ Built a **production-ready home server** that transforms an old laptop into a po
   - Responsive design
 
 - **Nginx Web Server**
+
   - High-performance reverse proxy
   - SSL termination and security headers
   - Load balancing capabilities
@@ -136,33 +146,40 @@ Built a **production-ready home server** that transforms an old laptop into a po
   - WebSocket support
 
 - **TinyML & AI Processing**
-  - NVIDIA GPU-accelerated workloads
+
+  - NVIDIA GPU-accelerated workloads (RTX 3060)
   - Machine learning model inference
   - Computer vision applications
   - Neural network training (small models)
   - Jupyter notebook environment
 
 ### **🔐 Security Features**
+
 - **SSH Hardening**
+
   - Custom port configuration (22022)
   - Key-based authentication only
   - Fail2Ban intrusion prevention
   - Connection rate limiting
 
 - **Cloudflare Integration**
+
   - Zero Trust network access
   - DDoS protection
   - SSL certificate management
   - DNS security and caching
 
 - **Firewall Configuration**
+
   - UFW (Uncomplicated Firewall) rules
   - Port-specific access controls
   - IP whitelisting capability
   - Logging and monitoring
 
 ### **🖥️ Remote Access**
+
 - **RustDesk (Primary)**
+
   - Open-source remote desktop solution
   - Self-hosted relay server capability
   - Cross-platform compatibility (Windows, Linux, macOS, mobile)
@@ -170,6 +187,7 @@ Built a **production-ready home server** that transforms an old laptop into a po
   - No licensing costs
 
 - **Tailscale VPN**
+
   - Secure mesh VPN network
   - Zero-configuration setup
   - End-to-end encrypted connections
@@ -182,31 +200,37 @@ Built a **production-ready home server** that transforms an old laptop into a po
 
 ### **Phase 1: Hardware Preparation**
 
-#### **ThinkPad T540p Optimization**
+#### **HP OMEN 16 (2022) Optimization**
+
 ```bash
-# Hardware specifications
-CPU: Intel Core i5-4300M (4th Gen)
-RAM: 16GB DDR3L (Upgraded from 8GB)
-Storage: 500GB SSD (Upgraded from HDD)
-Network: Gigabit Ethernet + WiFi AC
-GPU: NVIDIA Graphics (CUDA-enabled for ML workloads)
+# Typical hardware specifications (example configuration)
+CPU: Intel Core i7-12700H / AMD Ryzen 7 6800H (depending on SKU)
+RAM: 16GB DDR5 (upgradeable to 32GB+)
+Storage: 512GB NVMe SSD (upgradeable)
+Network: Gigabit Ethernet (via adapter) + WiFi 6/6E
+GPU: NVIDIA GeForce RTX 3060 - CUDA-capable
 ```
 
-#### **BIOS Configuration**
-- Enable Wake-on-LAN (WoL)
-- Configure power management for 24/7 operation
-- Set boot priority (SSD first)
-- Enable hardware virtualization (VT-x)
+#### **BIOS / Firmware Configuration**
+
+- Update BIOS/UEFI to latest vendor firmware.
+- Enable hardware virtualization (VT-x / SVM) for Docker/VM workloads.
+- Enable/verify discrete GPU (if hybrid graphics present) or set to discrete mode if supported.
+- Configure power management for 24/7 operation (set cooling profile to balanced/quiet as appropriate).
+- Disable unnecessary peripherals (e.g., camera/microphone) if not required for security.
+- Set boot priority to NVMe SSD.
+- Enable Wake-on-LAN only if using a supported Ethernet adapter and required.
 
 ### **Phase 2: Operating System Installation**
 
 #### **Option A: Fedora Server Installation**
+
 ```bash
 # Download Fedora Server ISO
-wget https://download.fedoraproject.org/pub/fedora/linux/releases/38/Server/x86_64/iso/Fedora-Server-dvd-x86_64-38-1.6.iso
+wget https://download.fedoraproject.org/pub/fedora/linux/releases/42/Server/x86_64/iso/Fedora-Server-dvd-x86_64-42-1.6.iso
 
 # Create bootable USB
-sudo dd if=Fedora-Server-dvd-x86_64-38-1.6.iso of=/dev/sdX bs=4M status=progress
+sudo dd if=Fedora-Server-dvd-x86_64-42-1.6.iso of=/dev/sdX bs=4M status=progress
 
 # Install with minimal configuration
 # - Enable SSH service
@@ -215,6 +239,7 @@ sudo dd if=Fedora-Server-dvd-x86_64-38-1.6.iso of=/dev/sdX bs=4M status=progress
 ```
 
 #### **Option B: Debian 12 Installation**
+
 ```bash
 # Download Debian 12 ISO
 wget https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-12.2.0-amd64-netinst.iso
@@ -229,6 +254,7 @@ sudo dd if=debian-12.2.0-amd64-netinst.iso of=/dev/sdX bs=4M status=progress
 ```
 
 #### **Option C: OpenSUSE Leap Installation**
+
 ```bash
 # Download OpenSUSE Leap ISO
 wget https://download.opensuse.org/distribution/leap/15.5/iso/openSUSE-Leap-15.5-DVD-x86_64-Media.iso
@@ -246,6 +272,7 @@ sudo dd if=openSUSE-Leap-15.5-DVD-x86_64-Media.iso of=/dev/sdX bs=4M status=prog
 ### **Phase 3: Initial System Configuration**
 
 #### **System Updates**
+
 ```bash
 # Fedora
 sudo dnf update -y && sudo dnf upgrade -y
@@ -261,6 +288,7 @@ sudo zypper install -y curl wget git htop neofetch
 ```
 
 #### **SSH Hardening**
+
 ```bash
 # Create SSH directory and generate keys
 mkdir -p ~/.ssh
@@ -291,6 +319,7 @@ sudo systemctl enable sshd
 ### **Phase 4: Firewall Configuration**
 
 #### **UFW Setup**
+
 ```bash
 # Install and configure UFW
 sudo apt install ufw  # Debian
@@ -303,10 +332,10 @@ sudo ufw default allow outgoing
 
 # Allow essential services
 sudo ufw allow 22022/tcp    # SSH
-sudo ufw allow 80/tcp      # HTTP
-sudo ufw allow 443/tcp     # HTTPS
-sudo ufw allow 8080/tcp    # Nextcloud
-sudo ufw allow 21117/tcp   # RustDesk
+sudo ufw allow 80/tcp       # HTTP
+sudo ufw allow 443/tcp      # HTTPS
+sudo ufw allow 8080/tcp     # Nextcloud
+sudo ufw allow 21117/tcp    # RustDesk
 
 # Enable firewall
 sudo ufw enable
@@ -316,6 +345,7 @@ sudo ufw status verbose
 ### **Phase 5: Nginx Web Server Installation**
 
 #### **Install Nginx**
+
 ```bash
 # Install Nginx
 sudo apt update
@@ -329,6 +359,7 @@ sudo zypper install nginx
 ```
 
 #### **Nginx Configuration**
+
 ```bash
 # Create main configuration
 sudo nano /etc/nginx/sites-available/homeserver
@@ -345,17 +376,17 @@ server {
 server {
     listen 443 ssl http2;
     server_name homeserver.anson.dev;
-    
+
     # SSL Configuration (Let's Encrypt)
     ssl_certificate /etc/letsencrypt/live/homeserver.anson.dev/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/homeserver.anson.dev/privkey.pem;
-    
+
     # Security headers
     add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;
     add_header X-Content-Type-Options "nosniff" always;
     add_header X-Frame-Options "DENY" always;
     add_header X-XSS-Protection "1; mode=block" always;
-    
+
     # Nextcloud reverse proxy
     location / {
         proxy_pass http://localhost:8080;
@@ -370,17 +401,17 @@ server {
 server {
     listen 443 ssl http2;
     server_name portfolio.anson.dev;
-    
+
     ssl_certificate /etc/letsencrypt/live/portfolio.anson.dev/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/portfolio.anson.dev/privkey.pem;
-    
+
     root /var/www/portfolio;
     index index.html index.htm;
-    
+
     location / {
         try_files $uri $uri/ =404;
     }
-    
+
     # Static assets optimization
     location ~* \.(jpg|jpeg|png|gif|ico|css|js)$ {
         expires 1y;
@@ -392,17 +423,17 @@ server {
 server {
     listen 443 ssl http2;
     server_name ml.anson.dev;
-    
+
     ssl_certificate /etc/letsencrypt/live/ml.anson.dev/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/ml.anson.dev/privkey.pem;
-    
+
     location / {
         proxy_pass http://localhost:8888;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
-        
+
         # WebSocket support for Jupyter
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
@@ -422,6 +453,7 @@ sudo systemctl restart nginx
 ### **Phase 6: Nextcloud Installation**
 
 #### **Docker-based Nextcloud Setup**
+
 ```bash
 # Install Docker
 curl -fsSL https://get.docker.com -o get-docker.sh
@@ -434,6 +466,7 @@ sudo chmod +x /usr/local/bin/docker-compose
 ```
 
 #### **Nextcloud Docker Compose**
+
 ```bash
 # Create Nextcloud directory
 mkdir -p ~/homeserver/nextcloud
@@ -444,7 +477,7 @@ nano docker-compose.yml
 ```
 
 ```yaml
-version: '3.8'
+version: "3.8"
 
 services:
   nextcloud-db:
@@ -514,6 +547,7 @@ docker-compose logs -f nextcloud-app
 ### **Phase 7: Cloudflare Tunnel Setup**
 
 #### **Install Cloudflare Tunnel**
+
 ```bash
 # Download and install cloudflared
 # For Debian/Ubuntu
@@ -566,6 +600,7 @@ cloudflared tunnel route dns homeserver-tunnel nextcloud.anson.dev
 ### **Phase 8: Remote Access Configuration**
 
 #### **RustDesk Installation**
+
 ```bash
 # Download RustDesk server
 wget https://github.com/rustdesk/rustdesk-server/releases/latest/download/rustdesk-server-linux-amd64.zip
@@ -607,6 +642,7 @@ sudo systemctl start rustdesk-hbbs
 ```
 
 #### **Tailscale VPN Setup**
+
 ```bash
 # Install Tailscale
 curl -fsSL https://tailscale.com/install.sh | sh
@@ -621,28 +657,27 @@ sudo tailscale up --ssh
 tailscale status
 ```
 
-#### **NVIDIA GPU Setup for TinyML**
-```bash
-# Install NVIDIA drivers
-# Debian/Ubuntu
-sudo apt install nvidia-driver-470
+#### **NVIDIA GPU Setup for TinyML (RTX 3060)**
 
-# Fedora
+```bash
+# Fedora (recommended approach)
+# Enable RPM Fusion repositories (free + nonfree), then install driver packages
+sudo dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+sudo dnf install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+sudo dnf update -y
 sudo dnf install akmod-nvidia xorg-x11-drv-nvidia-cuda
 
-# OpenSUSE Leap
+# Reboot after install
+sudo reboot
+
+# Debian/Ubuntu (general)
+sudo apt install nvidia-driver
+
+# OpenSUSE Leap (example)
 sudo zypper addrepo --refresh https://download.nvidia.com/opensuse/leap/15.5 NVIDIA
 sudo zypper install nvidia-gfxG05-kmp-default nvidia-compute-G05
 
-# Install CUDA toolkit
-wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin
-sudo mv cuda-ubuntu2004.pin /etc/apt/preferences.d/cuda-repository-pin-600
-wget https://developer.download.nvidia.com/compute/cuda/12.0.0/local_installers/cuda-repo-ubuntu2004-12-0-local_12.0.0-525.60.13-1_amd64.deb
-sudo dpkg -i cuda-repo-ubuntu2004-12-0-local_12.0.0-525.60.13-1_amd64.deb
-sudo cp /var/cuda-repo-ubuntu2004-12-0-local/cuda-*-keyring.gpg /usr/share/keyrings/
-sudo apt update
-sudo apt install cuda
-
+# Install CUDA toolkit (follow vendor instructions for distro)
 # Install Python ML libraries
 pip install tensorflow-gpu torch torchvision jupyter numpy pandas matplotlib
 ```
@@ -654,6 +689,7 @@ pip install tensorflow-gpu torch torchvision jupyter numpy pandas matplotlib
 ### **System Configuration**
 
 #### **UFW Rules Script**
+
 ```bash
 #!/bin/bash
 # ufw-setup.sh - Configure firewall rules
@@ -690,6 +726,7 @@ sudo ufw status numbered
 ```
 
 #### **System Monitoring Script**
+
 ```bash
 #!/bin/bash
 # system-monitor.sh - System health monitoring
@@ -700,26 +737,26 @@ get_system_info() {
     echo "Date: $(date)"
     echo "Uptime: $(uptime)"
     echo ""
-    
+
     echo "=== CPU Usage ==="
     top -bn1 | grep load | awk '{printf "CPU Load: %.2f\n", $(NF-2)}'
-    
+
     echo ""
     echo "=== Memory Usage ==="
     free -h
-    
+
     echo ""
     echo "=== Disk Usage ==="
     df -h | grep -E "^/dev"
-    
+
     echo ""
     echo "=== Network Connections ==="
     ss -tuln | grep -E ":(80|443|8080|22022|21117)"
-    
+
     echo ""
     echo "=== Docker Status ==="
     docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
-    
+
     echo ""
     echo "=== Service Status ==="
     systemctl is-active nginx docker rustdesk-hbbs cloudflared tailscaled
@@ -733,6 +770,7 @@ cat /var/log/system-monitor.log
 ### **Backup Scripts**
 
 #### **Automated Backup Script**
+
 ```bash
 #!/bin/bash
 # backup-homeserver.sh - Automated backup solution
@@ -770,6 +808,7 @@ echo "Backup completed: $DATE"
 ```
 
 #### **Crontab Configuration**
+
 ```bash
 # Edit crontab
 crontab -e
@@ -784,6 +823,7 @@ crontab -e
 ## 📊 Performance Monitoring
 
 ### **System Resources**
+
 ```bash
 # Real-time monitoring
 htop
@@ -797,6 +837,7 @@ sar -d 1 10    # Disk I/O
 ```
 
 ### **Service Health Checks**
+
 ```bash
 #!/bin/bash
 # health-check.sh - Service health monitoring
@@ -833,6 +874,7 @@ fi
 ## 🔐 Security Hardening
 
 ### **Advanced SSH Configuration**
+
 ```bash
 # /etc/ssh/sshd_config
 Protocol 2
@@ -864,10 +906,11 @@ DenyUsers root
 ```
 
 ### **Fail2Ban Configuration**
+
 ```bash
 # Install Fail2Ban
 sudo apt install fail2ban  # Debian
-sudo dnf install fail2ban  # Fedora  
+sudo dnf install fail2ban  # Fedora
 sudo zypper install fail2ban  # OpenSUSE Leap
 
 # Configure SSH protection
@@ -897,6 +940,7 @@ sudo fail2ban-client status
 ```
 
 ### **Automatic Security Updates**
+
 ```bash
 # Configure unattended upgrades
 # Debian/Ubuntu
@@ -922,6 +966,7 @@ sudo nano /etc/apt/apt.conf.d/50unattended-upgrades
 ## 🌐 Domain & DNS Configuration
 
 ### **Cloudflare DNS Records**
+
 ```dns
 # A Records
 homeserver.anson.dev    A    [SERVER_IP]    Proxied
@@ -939,6 +984,7 @@ anson.dev              TXT    "v=spf1 include:_spf.google.com ~all"
 ```
 
 ### **Dynamic DNS Update Script**
+
 ```bash
 #!/bin/bash
 # ddns-update.sh - Update Cloudflare DNS with current IP
@@ -964,15 +1010,18 @@ echo "DNS updated to $CURRENT_IP"
 ## 📱 Mobile & Remote Management
 
 ### **Nextcloud Mobile Apps**
+
 - **iOS:** Nextcloud Files app
 - **Android:** Nextcloud app from F-Droid or Play Store
 - **Features:**
+
   - Automatic photo uploads
   - Document scanning
   - Offline file access
   - Calendar and contacts sync
 
 ### **RustDesk Mobile Configuration**
+
 ```json
 {
   "host": "homeserver.anson.dev",
@@ -983,6 +1032,7 @@ echo "DNS updated to $CURRENT_IP"
 ```
 
 ### **SSH Mobile Access via Tailscale**
+
 ```bash
 # Install Tailscale on mobile device (iOS/Android)
 # Download from App Store / Play Store
@@ -999,14 +1049,16 @@ ssh -p 22022 anson@homeserver
 ## 🎯 Personal Project Achievements
 
 ### **Innovation Points**
-- **🏆 Cost-Effective Solution:** Repurposed old laptop as enterprise-grade server
+
+- **🏆 Cost-Effective Solution:** Repurposed modern gaming laptop (HP OMEN 16) as enterprise-grade server
 - **🔒 Zero Trust Security:** Cloudflare Tunnel + Tailscale VPN for secure access
 - **⚡ Performance Optimization:** Nginx high-performance reverse proxy
-- **🤖 AI/ML Integration:** NVIDIA GPU acceleration for TinyML workloads
+- **🤖 AI/ML Integration:** NVIDIA GeForce RTX 3060 acceleration for TinyML workloads
 - **🌍 Global Accessibility:** CDN integration for worldwide fast access
 - **🔧 Automation:** Comprehensive scripts for maintenance and monitoring
 
 ### **Technical Excellence**
+
 - **📊 Service Reliability:** 99.9% uptime through systemd service management
 - **🛡️ Multi-Layer Security:** Firewall + SSH hardening + Intrusion detection + VPN
 - **📈 Scalability:** Docker-based services for easy scaling
@@ -1016,7 +1068,8 @@ ssh -p 22022 anson@homeserver
 - **🤖 ML Capabilities:** GPU-accelerated machine learning inference and training
 
 ### **Problem-Solving Approach**
-1. **Hardware Constraints:** Optimized ThinkPad T540p for 24/7 server operation
+
+1. **Hardware Constraints:** Optimized HP OMEN 16 (2022) for 24/7 server operation
 2. **Security Challenges:** Implemented enterprise-grade security on home network
 3. **Performance Issues:** Used Nginx's high-performance features for optimal web serving
 4. **Accessibility Requirements:** Cloudflare Tunnel + Tailscale VPN for secure external access
@@ -1027,14 +1080,16 @@ ssh -p 22022 anson@homeserver
 ## 📈 Performance Metrics
 
 ### **System Performance**
+
 ```bash
 # CPU Usage (Average): 15-25%
-# Memory Usage: 8-12GB / 16GB
-# Storage I/O: 50-100 IOPS average
+# Memory Usage: 8-12GB / 16GB (or 16-24GB depending on upgrade)
+# Storage I/O: NVMe typical 1000s IOPS (depends on SSD model)
 # Network Throughput: 100-500 Mbps (depending on usage)
 ```
 
 ### **Service Response Times**
+
 - **Nginx Web Server:** ~3ms local response
 - **Nextcloud:** ~200-500ms (depending on operation)
 - **Portfolio Website:** ~10-50ms (static content)
@@ -1044,6 +1099,7 @@ ssh -p 22022 anson@homeserver
 - **Cloudflare Tunnel:** ~20-50ms additional latency
 
 ### **Uptime Statistics**
+
 - **System Uptime:** 99.8% (planned maintenance excluded)
 - **Service Availability:** 99.9% (automatic restarts configured)
 - **Network Connectivity:** 99.5% (ISP dependent)
@@ -1053,6 +1109,7 @@ ssh -p 22022 anson@homeserver
 ## 🚀 Future Enhancements
 
 ### **Planned Improvements**
+
 - **📊 Grafana Dashboard:** Real-time system monitoring
 - **🔍 ELK Stack:** Centralized logging and analysis
 - **🌐 Kubernetes Migration:** Container orchestration for better scalability
@@ -1060,6 +1117,7 @@ ssh -p 22022 anson@homeserver
 - **🏠 Home Automation:** IoT device management hub
 
 ### **Service Expansions**
+
 - **📧 Email Server:** Self-hosted email with Postfix/Dovecot
 - **💬 Matrix Server:** Private chat and collaboration
 - **🎵 Media Server:** Jellyfin or Plex for media streaming
@@ -1067,6 +1125,7 @@ ssh -p 22022 anson@homeserver
 - **🔄 GitLab Instance:** Private code repository and CI/CD
 
 ### **Security Enhancements**
+
 - **🔐 Vault Integration:** Secret management system
 - **📱 2FA Implementation:** TOTP for all services
 - **🛡️ Intrusion Detection:** OSSEC or Wazuh deployment
@@ -1080,6 +1139,7 @@ ssh -p 22022 anson@homeserver
 ### **Common Issues**
 
 #### **Service Not Starting**
+
 ```bash
 # Check service status
 sudo systemctl status nginx
@@ -1094,6 +1154,7 @@ sudo systemctl restart nginx docker
 ```
 
 #### **Network Connectivity Issues**
+
 ```bash
 # Test local services
 curl -I localhost:8080  # Nextcloud
@@ -1111,6 +1172,7 @@ sudo ufw status verbose
 ```
 
 #### **Docker Container Problems**
+
 ```bash
 # Check container status
 docker ps -a
@@ -1125,20 +1187,22 @@ docker-compose up -d
 ### **Recovery Procedures**
 
 #### **System Recovery**
+
 ```bash
 # Boot from live USB
 # Mount system drive
-sudo mount /dev/sda1 /mnt
+sudo mount /dev/nvme0n1p1 /mnt
 
 # Chroot into system
 sudo chroot /mnt
 
 # Repair boot loader
-grub-install /dev/sda
+grub-install /dev/nvme0n1
 update-grub
 ```
 
 #### **Data Recovery**
+
 ```bash
 # Restore from backup
 tar -xzf /backups/nextcloud_data_YYYYMMDD.tar.gz -C /
@@ -1152,6 +1216,7 @@ docker exec nextcloud-db mysqldump -u root -p nextcloud > backup.sql
 ## 📚 Resources & Documentation
 
 ### **Official Documentation**
+
 - **[Nginx Documentation](https://nginx.org/en/docs/)**
 - **[Nextcloud Administration Manual](https://docs.nextcloud.com/server/latest/admin_manual/)**
 - **[Cloudflare Tunnel Documentation](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/)**
@@ -1159,11 +1224,13 @@ docker exec nextcloud-db mysqldump -u root -p nextcloud > backup.sql
 - **[Tailscale Documentation](https://tailscale.com/kb/)**
 
 ### **Community Resources**
+
 - **[r/selfhosted](https://reddit.com/r/selfhosted)** - Self-hosting community
 - **[awesome-selfhosted](https://github.com/awesome-selfhosted/awesome-selfhosted)** - Curated list
 - **[HomeServer Discord](https://discord.gg/homeserver)** - Support community
 
 ### **Learning Resources**
+
 - **Linux Server Administration** - Red Hat System Administration
 - **Docker & Containerization** - Docker official tutorials
 - **Network Security** - CISSP/CEH certification materials
@@ -1173,16 +1240,18 @@ docker exec nextcloud-db mysqldump -u root -p nextcloud > backup.sql
 
 ## 📜 License & Acknowledgments
 
-**License © 2025 Anson Saju George**  
+**License © 2025 Anson Saju George**
 This project is licensed under MIT License - see LICENSE file for details.
 
 ### **Acknowledgments**
+
 - **Hackathon Organizers** for providing the platform
 - **Open Source Community** for the amazing tools
-- **ThinkPad Hardware** for reliable 24/7 operation
+- **HP OMEN Hardware** for capable, upgradeable hardware used for server duties
 - **Cloudflare** for generous free tier services
 
 ### **Open Source Projects Used**
+
 - **[Nginx](https://github.com/nginx/nginx)** - High-performance web server
 - **[Nextcloud](https://github.com/nextcloud/server)** - Self-hosted cloud platform
 - **[RustDesk](https://github.com/rustdesk/rustdesk)** - Remote desktop software
@@ -1194,18 +1263,21 @@ This project is licensed under MIT License - see LICENSE file for details.
 ## 🏆 Project Impact & Recognition
 
 ### **Personal Achievement**
+
 - **✅ Production Deployment:** Successfully running personal infrastructure for 18+ months
 - **🏆 Learning Milestone:** Comprehensive understanding of enterprise infrastructure
-- **💡 Innovation Success:** Creative use of legacy hardware for modern services
+- **💡 Innovation Success:** Creative use of modern laptop hardware for server-grade services
 - **🎯 Goal Achievement:** Complete self-hosted cloud solution with professional-grade security
 
 ### **Technical Validation**
+
 - **✅ Production Readiness:** Deployed and running for 18+ months
 - **✅ Security Implementation:** Multi-layer security with zero breaches
 - **✅ Performance Benchmarks:** Exceeded expected load requirements
 - **✅ Reliability Testing:** 99.8% uptime over 6-month period
 
 ### **Knowledge Gained**
+
 - **📝 System Administration:** Advanced Linux server management
 - **🎯 Network Engineering:** VPN, reverse proxy, and security configurations
 - **💬 DevOps Practices:** Containerization, automation, and monitoring
