@@ -52,7 +52,7 @@ Built a **production-ready home server** that transforms an HP OMEN 16 (2022) la
 
 - **🔥 Firewall:** UFW (Uncomplicated Firewall) + iptables
 - **🔐 SSH Security:** Hardened SSH configuration with key-based auth
-- **🛡️ SSL/TLS:** Automatic certificate management via Let's Encrypt
+- **🛡️ SSL/TLS:** Cloudflare-managed TLS through Cloudflare Tunnel
 - **🌐 DNS Management:** Cloudflare DNS with DDNS updates
 - **🔒 VPN Access:** Tailscale mesh VPN for secure remote access
 - **📊 Monitoring:** System resource monitoring and logging
@@ -156,7 +156,7 @@ Built a **production-ready home server** that transforms an HP OMEN 16 (2022) la
   - Machine learning model inference
   - Computer vision applications
   - Neural network training (small models)
-  - Jupyter notebook environment
+  - FastAPI backends served through systemd and Nginx routes
 
 ### **🔐 Security Features**
 
@@ -226,52 +226,21 @@ GPU: NVIDIA GeForce RTX 3060 Mobile/Max-Q - CUDA 13.0 capable
 - Set boot priority to NVMe SSD.
 - Enable Wake-on-LAN only if using a supported Ethernet adapter and required.
 
-### **Phase 2: Operating System Installation**
+### **Phase 2: Operating System Baseline**
 
-#### **Option A: Fedora Server Installation**
-
-```bash
-# Download Fedora Server ISO
-wget https://download.fedoraproject.org/pub/fedora/linux/releases/42/Server/x86_64/iso/Fedora-Server-dvd-x86_64-42-1.6.iso
-
-# Create bootable USB
-sudo dd if=Fedora-Server-dvd-x86_64-42-1.6.iso of=/dev/sdX bs=4M status=progress
-
-# Install with minimal configuration
-# - Enable SSH service
-# - Create admin user
-# - Configure network settings
-```
-
-#### **Option B: Debian 12 Installation**
+#### **Fedora Linux 42 Workstation Installation**
 
 ```bash
-# Download Debian 12 ISO
-wget https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-12.2.0-amd64-netinst.iso
+# Download Fedora Workstation ISO
+wget https://download.fedoraproject.org/pub/fedora/linux/releases/42/Workstation/x86_64/iso/Fedora-Workstation-Live-42-1.1.x86_64.iso
 
 # Create bootable USB
-sudo dd if=debian-12.2.0-amd64-netinst.iso of=/dev/sdX bs=4M status=progress
+sudo dd if=Fedora-Workstation-Live-42-1.1.x86_64.iso of=/dev/sdX bs=4M status=progress
 
-# Install with server selection
-# - SSH server
-# - Web server (basic)
-# - Standard system utilities
-```
-
-#### **Option C: OpenSUSE Leap Installation**
-
-```bash
-# Download OpenSUSE Leap ISO
-wget https://download.opensuse.org/distribution/leap/15.5/iso/openSUSE-Leap-15.5-DVD-x86_64-Media.iso
-
-# Create bootable USB
-sudo dd if=openSUSE-Leap-15.5-DVD-x86_64-Media.iso of=/dev/sdX bs=4M status=progress
-
-# Install with server pattern
-# - Select "Server" pattern during installation
-# - Enable SSH service
-# - Configure firewall (disable for now, we'll configure UFW)
-# - Create admin user with sudo privileges
+# Install with current server user
+# - Create user: ansonsajugeorge
+# - Enable network connectivity
+# - Install SSH, Nginx, Cloudflare Tunnel, Tailscale, Docker, and NVIDIA stack after first boot
 ```
 
 ### **Phase 3: Initial System Configuration**
@@ -279,17 +248,8 @@ sudo dd if=openSUSE-Leap-15.5-DVD-x86_64-Media.iso of=/dev/sdX bs=4M status=prog
 #### **System Updates**
 
 ```bash
-# Fedora
 sudo dnf update -y && sudo dnf upgrade -y
-sudo dnf install -y curl wget git htop neofetch
-
-# Debian
-sudo apt update && sudo apt upgrade -y
-sudo apt install -y curl wget git htop neofetch
-
-# OpenSUSE Leap
-sudo zypper refresh && sudo zypper update -y
-sudo zypper install -y curl wget git htop neofetch
+sudo dnf install -y curl wget git htop neofetch unzip nano policycoreutils-python-utils
 ```
 
 #### **SSH Hardening**
@@ -312,7 +272,7 @@ PubkeyAuthentication yes
 MaxAuthTries 3
 ClientAliveInterval 300
 ClientAliveCountMax 2
-AllowUsers anson
+AllowUsers ansonsajugeorge
 ```
 
 ```bash
@@ -327,9 +287,7 @@ sudo systemctl enable sshd
 
 ```bash
 # Install and configure UFW
-sudo apt install ufw  # Debian
-sudo dnf install ufw  # Fedora
-sudo zypper install ufw  # OpenSUSE Leap
+sudo dnf install -y ufw
 
 # Default policies
 sudo ufw default deny incoming
@@ -353,103 +311,120 @@ sudo ufw status verbose
 
 ```bash
 # Install Nginx
-sudo apt update
-sudo apt install nginx
-
-# For Fedora
-sudo dnf install nginx
-
-# For OpenSUSE Leap
-sudo zypper install nginx
+sudo dnf install -y nginx
 ```
 
 #### **Nginx Configuration**
 
 ```bash
 # Create main configuration
-sudo nano /etc/nginx/sites-available/homeserver
+sudo nano /etc/nginx/conf.d/ansonsajugeorge.online.conf
 ```
 
 ```nginx
-# Main server configuration
 server {
     listen 80;
     server_name ansonsajugeorge.online www.ansonsajugeorge.online;
-    return 301 https://$server_name$request_uri;
-}
 
-server {
-    listen 443 ssl http2;
-    server_name ansonsajugeorge.online www.ansonsajugeorge.online;
+    root /var/www/portfolio/dist;
+    index index.html;
 
-    # SSL Configuration (Let's Encrypt)
-    ssl_certificate /etc/letsencrypt/live/ansonsajugeorge.online/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/ansonsajugeorge.online/privkey.pem;
+    client_max_body_size 2000M;
+    sendfile on;
+    tcp_nopush on;
+    tcp_nodelay on;
 
-    # Security headers
-    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;
-    add_header X-Content-Type-Options "nosniff" always;
-    add_header X-Frame-Options "DENY" always;
-    add_header X-XSS-Protection "1; mode=block" always;
-
-    # Nextcloud reverse proxy
+    # Portfolio SPA
     location / {
-        proxy_pass http://localhost:8080;
+        try_files $uri $uri/ /index.html;
+    }
+
+    # Portfolio backend API
+    location ^~ /api/ {
+        proxy_pass http://127.0.0.1:8080;
+        proxy_http_version 1.1;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
     }
-}
 
-# Portfolio website
-server {
-    listen 443 ssl http2;
-    server_name ansonsajugeorge.online www.ansonsajugeorge.online;
+    # Blog
+    location ^~ /just-a-blog/ {
+        alias /var/www/just-a-blog/dist/;
+        index index.html;
+        try_files $uri $uri/ /index.html;
+    }
 
-    ssl_certificate /etc/letsencrypt/live/ansonsajugeorge.online/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/ansonsajugeorge.online/privkey.pem;
+    # WMS frontend and backend
+    location ^~ /wms/ {
+        alias /var/www/wms/dist/;
+        index index.html;
+        try_files $uri $uri/ /index.html;
+    }
 
-    root /var/www/portfolio;
-    index index.html index.htm;
+    location ^~ /wms/api/ {
+        proxy_pass http://127.0.0.1:8081/;
+        proxy_http_version 1.1;
+        proxy_request_buffering off;
+        proxy_buffering off;
+        proxy_connect_timeout 1800;
+        proxy_send_timeout 1800;
+        proxy_read_timeout 1800;
+        client_max_body_size 2000M;
+    }
 
-    location / {
+    # Deepfake frontend and backend
+    location ^~ /deepfake/ {
+        alias /var/www/deepfake/dist/;
+        index index.html;
         try_files $uri $uri/ =404;
     }
 
-    # Static assets optimization
-    location ~* \.(jpg|jpeg|png|gif|ico|css|js)$ {
-        expires 1y;
-        add_header Cache-Control "public, immutable";
-    }
-}
-
-# ML application routes
-server {
-    listen 443 ssl http2;
-    server_name ansonsajugeorge.online www.ansonsajugeorge.online;
-
-    ssl_certificate /etc/letsencrypt/live/ansonsajugeorge.online/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/ansonsajugeorge.online/privkey.pem;
-
-    location / {
-        proxy_pass http://localhost:8888;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-
-        # WebSocket support for Jupyter
+    location ^~ /deepfake/api/ {
+        proxy_pass http://127.0.0.1:8000/;
         proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection "upgrade";
+        proxy_request_buffering off;
+        proxy_buffering off;
+        proxy_connect_timeout 1800;
+        proxy_send_timeout 1800;
+        proxy_read_timeout 1800;
+        client_max_body_size 2000M;
+    }
+
+    # EEG seizure app
+    location ^~ /eeg_seizure_detection_app/ {
+        alias /var/www/eeg_seizure_detection_app/dist/;
+        index index.html;
+        try_files $uri $uri/ /index.html;
+    }
+
+    # Context Forge frontend and backend
+    location = /context-forge {
+        return 301 /context-forge/;
+    }
+
+    location ^~ /context-forge/api/ {
+        proxy_pass http://127.0.0.1:8086;
+        proxy_http_version 1.1;
+        proxy_request_buffering off;
+        proxy_buffering off;
+        proxy_connect_timeout 1800;
+        proxy_send_timeout 1800;
+        proxy_read_timeout 1800;
+        client_max_body_size 2000M;
+    }
+
+    location ^~ /context-forge/ {
+        alias /var/www/context-forge/dist/;
+        index index.html;
+        try_files $uri $uri/ /index.html;
     }
 }
 ```
 
 ```bash
-# Enable site and restart Nginx
-sudo ln -s /etc/nginx/sites-available/homeserver /etc/nginx/sites-enabled/
+# Validate and restart Nginx
 sudo nginx -t
 sudo systemctl enable nginx
 sudo systemctl restart nginx
@@ -461,13 +436,9 @@ sudo systemctl restart nginx
 
 ```bash
 # Install Docker
-curl -fsSL https://get.docker.com -o get-docker.sh
-sudo sh get-docker.sh
+sudo dnf install -y moby-engine docker-cli docker-compose docker-buildx
+sudo systemctl enable --now docker
 sudo usermod -aG docker $USER
-
-# Install Docker Compose
-sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
 ```
 
 #### **Nextcloud Docker Compose**
@@ -555,11 +526,6 @@ docker-compose logs -f nextcloud-app
 
 ```bash
 # Download and install cloudflared
-# For Debian/Ubuntu
-wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
-sudo dpkg -i cloudflared-linux-amd64.deb
-
-# For Fedora/OpenSUSE (using binary)
 wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64
 sudo mv cloudflared-linux-amd64 /usr/local/bin/cloudflared
 sudo chmod +x /usr/local/bin/cloudflared
@@ -571,13 +537,13 @@ cloudflared tunnel login
 cloudflared tunnel create homeserver-tunnel
 
 # Configure tunnel
-nano ~/.cloudflared/config.yml
+sudo nano /etc/cloudflared/config.yml
 ```
 
 ```yaml
 # Cloudflare Tunnel Configuration
 tunnel: homeserver-tunnel
-credentials-file: /home/anson/.cloudflared/[tunnel-id].json
+credentials-file: /etc/cloudflared/[tunnel-id].json
 
 ingress:
   - hostname: ansonsajugeorge.online
@@ -670,13 +636,6 @@ sudo dnf install akmod-nvidia xorg-x11-drv-nvidia-cuda
 
 # Reboot after install
 sudo reboot
-
-# Debian/Ubuntu (general)
-sudo apt install nvidia-driver
-
-# OpenSUSE Leap (example)
-sudo zypper addrepo --refresh https://download.nvidia.com/opensuse/leap/15.5 NVIDIA
-sudo zypper install nvidia-gfxG05-kmp-default nvidia-compute-G05
 
 # Install CUDA toolkit (follow vendor instructions for distro)
 # Install Python ML libraries
@@ -794,7 +753,7 @@ echo "Backing up system configs..."
 tar -czf "$BACKUP_DIR/system_configs_$DATE.tar.gz" \
     /etc/nginx \
     /etc/ssh \
-    ~/.cloudflared \
+    /etc/cloudflared \
     /etc/systemd/system/rustdesk* \
     /etc/ufw
 
@@ -815,8 +774,8 @@ echo "Backup completed: $DATE"
 crontab -e
 
 # Add backup schedule
-0 2 * * * /home/anson/scripts/backup-homeserver.sh >> /var/log/backup.log 2>&1
-0 1 * * * /home/anson/scripts/system-monitor.sh >> /var/log/monitor.log 2>&1
+0 2 * * * /home/ansonsajugeorge/scripts/backup-homeserver.sh >> /var/log/backup.log 2>&1
+0 1 * * * /home/ansonsajugeorge/scripts/system-monitor.sh >> /var/log/monitor.log 2>&1
 ```
 
 ---
@@ -902,7 +861,7 @@ MaxSessions 4
 MaxStartups 10:30:60
 
 # Allow specific users only
-AllowUsers anson
+AllowUsers ansonsajugeorge
 DenyUsers root
 ```
 
@@ -910,9 +869,7 @@ DenyUsers root
 
 ```bash
 # Install Fail2Ban
-sudo apt install fail2ban  # Debian
-sudo dnf install fail2ban  # Fedora
-sudo zypper install fail2ban  # OpenSUSE Leap
+sudo dnf install -y fail2ban
 
 # Configure SSH protection
 sudo nano /etc/fail2ban/jail.local
@@ -928,7 +885,7 @@ backend = systemd
 [sshd]
 enabled = true
 port = 22022
-logpath = /var/log/auth.log
+journalmatch = _SYSTEMD_UNIT=sshd.service
 maxretry = 3
 bantime = 86400
 ```
@@ -944,22 +901,9 @@ sudo fail2ban-client status
 
 ```bash
 # Configure unattended upgrades
-# Debian/Ubuntu
-sudo apt install unattended-upgrades apt-listchanges
-
-# Fedora
 sudo dnf install dnf-automatic
 sudo systemctl enable --now dnf-automatic-install.timer
-
-# OpenSUSE Leap
-sudo zypper install zypp-auto-updater
-sudo systemctl enable --now zypp-auto-updater.timer
-
-# Configure automatic updates (Debian)
-sudo dpkg-reconfigure -plow unattended-upgrades
-
-# Custom configuration
-sudo nano /etc/apt/apt.conf.d/50unattended-upgrades
+sudo nano /etc/dnf/automatic.conf
 ```
 
 ---
