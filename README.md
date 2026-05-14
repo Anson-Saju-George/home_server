@@ -7,7 +7,7 @@ A **comprehensive home server solution** built on repurposed HP OMEN 16 (2022) h
 - **Developer:** Anson Saju George
 - **Type:** Personal Infrastructure Project
 - **Hardware:** HP OMEN 16 (2022) (Repurposed Laptop)
-- **Operating Systems:** Fedora Server 42+ / Debian 12 (Bookworm) / OpenSUSE Leap 15.5+
+- **Operating System:** Fedora Linux 42 Workstation Edition
 - **Architecture:** Self-hosted cloud infrastructure with secure remote access
 - **Focus:** DevOps, System Administration, Network Security, Cloud Services
 
@@ -25,8 +25,9 @@ Built a **production-ready home server** that transforms an HP OMEN 16 (2022) la
 
 - **Private Cloud Storage** (Nextcloud)
 - **High-Performance Web Server** (Nginx with reverse proxy)
-- **Portfolio Website Hosting** (Personal portfolio and projects)
-- **Machine Learning Capabilities** (NVIDIA GPU acceleration for TinyML — GeForce RTX 3060)
+- **Portfolio Website Hosting** (personal portfolio, blog, and project apps)
+- **Machine Learning Capabilities** (NVIDIA GPU acceleration for TinyML — GeForce RTX 3060 Mobile/Max-Q)
+- **Hosted Applications** (WMS, Deepfake, EEG Seizure App, and Context Forge)
 - **Secure Remote Access** (RustDesk + Tailscale VPN)
 - **Enterprise Security** (Cloudflare Tunnel, SSH hardening)
 - **Network Security** (Firewall configurations)
@@ -38,12 +39,12 @@ Built a **production-ready home server** that transforms an HP OMEN 16 (2022) la
 
 ### **Core Infrastructure**
 
-- **🖥️ Hardware Platform:** HP OMEN 16 (2022) — modern laptop repurposed as server (NVMe SSD, 16–32GB RAM, NVIDIA GeForce RTX 3060)
-- **🎮 GPU Acceleration:** NVIDIA GeForce RTX 3060 (CUDA-enabled for ML workloads)
-- **🐧 Operating Systems:** Fedora Server 42+ | Debian 12 (Bookworm) | OpenSUSE Leap 15.5+
+- **🖥️ Hardware Platform:** HP OMEN 16 (2022) — Intel Core i7-12700H, 16 GiB RAM, 1 TB Samsung NVMe SSD, NVIDIA GeForce RTX 3060 Mobile/Max-Q
+- **🎮 GPU Acceleration:** NVIDIA GeForce RTX 3060 Mobile/Max-Q with NVIDIA driver 580.159.03 and CUDA 13.0
+- **🐧 Operating System:** Fedora Linux 42 Workstation Edition
 - **🌐 Web Server:** Nginx (High-performance reverse proxy)
 - **☁️ Cloud Platform:** Nextcloud 27+ (Self-hosted cloud storage)
-- **🌍 Portfolio Hosting:** Personal website and project showcase
+- **🌍 Web App Hosting:** Portfolio, blog, WMS, Deepfake, EEG Seizure App, and Context Forge
 - **🔒 Security Tunnel:** Cloudflare Tunnel (Zero Trust network access)
 - **🖥️ Remote Access:** RustDesk (Open-source) + Tailscale VPN
 
@@ -55,7 +56,7 @@ Built a **production-ready home server** that transforms an HP OMEN 16 (2022) la
 - **🌐 DNS Management:** Cloudflare DNS with DDNS updates
 - **🔒 VPN Access:** Tailscale mesh VPN for secure remote access
 - **📊 Monitoring:** System resource monitoring and logging
-- **🤖 ML Processing:** CUDA-enabled environment for TinyML applications (RTX 3060)
+- **🤖 ML Processing:** CUDA-enabled environment for TinyML applications (RTX 3060 Mobile/Max-Q, CUDA 13.0)
 
 ---
 
@@ -86,8 +87,8 @@ Built a **production-ready home server** that transforms an HP OMEN 16 (2022) la
 │  │  └─────┬─────────────────────┬─────────────────────┬─────┤
 │  │        │                     │                     │     |
 │  │  ┌─────▼──────┐       ┌─────▼──────┐       ┌─────▼──────┐|
-│  │  │ NEXTCLOUD  │       │ PORTFOLIO  │       │  TINY ML   │|
-│  │  │   :8080    │       │   :3000    │       │   :8888    │|
+│  │  │ NEXTCLOUD  │       │ PORTFOLIO  │       │ ML APPS    │|
+│  │  │ cloud.*    │       │ main site  │       │ WMS/etc.   │|
 │  │  │            │       │            │       │            │|
 │  │  │ Files/Sync │       │  Website   │       │ NVIDIA GPU │|
 │  │  └────────────┘       └────────────┘       └────────────┘|
@@ -129,12 +130,15 @@ Built a **production-ready home server** that transforms an HP OMEN 16 (2022) la
   - Photo organization and sharing
   - Mobile app integration
 
-- **Portfolio Website**
+- **Portfolio Website & Hosted Apps**
 
   - Personal project showcase
   - Professional resume and skills
   - Blog and technical articles
-  - Interactive demos and galleries
+  - WMS application
+  - Deepfake application
+  - EEG Seizure App
+  - Context Forge
   - Responsive design
 
 - **Nginx Web Server**
@@ -147,7 +151,8 @@ Built a **production-ready home server** that transforms an HP OMEN 16 (2022) la
 
 - **TinyML & AI Processing**
 
-  - NVIDIA GPU-accelerated workloads (RTX 3060)
+  - NVIDIA GPU-accelerated workloads (RTX 3060 Mobile/Max-Q)
+  - NVIDIA driver 580.159.03 with CUDA 13.0
   - Machine learning model inference
   - Computer vision applications
   - Neural network training (small models)
@@ -203,12 +208,12 @@ Built a **production-ready home server** that transforms an HP OMEN 16 (2022) la
 #### **HP OMEN 16 (2022) Optimization**
 
 ```bash
-# Typical hardware specifications (example configuration)
-CPU: Intel Core i7-12700H / AMD Ryzen 7 6800H (depending on SKU)
-RAM: 16GB DDR5 (upgradeable to 32GB+)
-Storage: 512GB NVMe SSD (upgradeable)
+# Current HP OMEN 16 server configuration
+CPU: Intel Core i7-12700H
+RAM: 16 GiB DDR5
+Storage: 1 TB Samsung NVMe SSD
 Network: Gigabit Ethernet (via adapter) + WiFi 6/6E
-GPU: NVIDIA GeForce RTX 3060 - CUDA-capable
+GPU: NVIDIA GeForce RTX 3060 Mobile/Max-Q - CUDA 13.0 capable
 ```
 
 #### **BIOS / Firmware Configuration**
@@ -292,7 +297,7 @@ sudo zypper install -y curl wget git htop neofetch
 ```bash
 # Create SSH directory and generate keys
 mkdir -p ~/.ssh
-ssh-keygen -t rsa -b 4096 -C "homeserver@anson.dev"
+ssh-keygen -t rsa -b 4096 -C "homeserver@ansonsajugeorge.online"
 
 # Configure SSH daemon
 sudo nano /etc/ssh/sshd_config
@@ -369,17 +374,17 @@ sudo nano /etc/nginx/sites-available/homeserver
 # Main server configuration
 server {
     listen 80;
-    server_name homeserver.anson.dev;
+    server_name ansonsajugeorge.online www.ansonsajugeorge.online;
     return 301 https://$server_name$request_uri;
 }
 
 server {
     listen 443 ssl http2;
-    server_name homeserver.anson.dev;
+    server_name ansonsajugeorge.online www.ansonsajugeorge.online;
 
     # SSL Configuration (Let's Encrypt)
-    ssl_certificate /etc/letsencrypt/live/homeserver.anson.dev/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/homeserver.anson.dev/privkey.pem;
+    ssl_certificate /etc/letsencrypt/live/ansonsajugeorge.online/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/ansonsajugeorge.online/privkey.pem;
 
     # Security headers
     add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;
@@ -400,10 +405,10 @@ server {
 # Portfolio website
 server {
     listen 443 ssl http2;
-    server_name portfolio.anson.dev;
+    server_name ansonsajugeorge.online www.ansonsajugeorge.online;
 
-    ssl_certificate /etc/letsencrypt/live/portfolio.anson.dev/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/portfolio.anson.dev/privkey.pem;
+    ssl_certificate /etc/letsencrypt/live/ansonsajugeorge.online/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/ansonsajugeorge.online/privkey.pem;
 
     root /var/www/portfolio;
     index index.html index.htm;
@@ -419,13 +424,13 @@ server {
     }
 }
 
-# TinyML Jupyter server
+# ML application routes
 server {
     listen 443 ssl http2;
-    server_name ml.anson.dev;
+    server_name ansonsajugeorge.online www.ansonsajugeorge.online;
 
-    ssl_certificate /etc/letsencrypt/live/ml.anson.dev/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/ml.anson.dev/privkey.pem;
+    ssl_certificate /etc/letsencrypt/live/ansonsajugeorge.online/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/ansonsajugeorge.online/privkey.pem;
 
     location / {
         proxy_pass http://localhost:8888;
@@ -575,14 +580,10 @@ tunnel: homeserver-tunnel
 credentials-file: /home/anson/.cloudflared/[tunnel-id].json
 
 ingress:
-  - hostname: homeserver.anson.dev
+  - hostname: ansonsajugeorge.online
     service: http://localhost:80
-  - hostname: nextcloud.anson.dev
-    service: http://localhost:8080
-  - hostname: static.anson.dev
-    service: http://localhost:80
-  - hostname: ssh.anson.dev
-    service: ssh://localhost:22022
+  - hostname: cloud.ansonsajugeorge.online
+    service: http://127.0.0.1:11000
   - service: http_status:404
 ```
 
@@ -593,8 +594,8 @@ sudo systemctl enable cloudflared
 sudo systemctl start cloudflared
 
 # Set DNS records
-cloudflared tunnel route dns homeserver-tunnel homeserver.anson.dev
-cloudflared tunnel route dns homeserver-tunnel nextcloud.anson.dev
+cloudflared tunnel route dns homeserver-tunnel ansonsajugeorge.online
+cloudflared tunnel route dns homeserver-tunnel cloud.ansonsajugeorge.online
 ```
 
 ### **Phase 8: Remote Access Configuration**
@@ -623,7 +624,7 @@ After=network.target
 Type=simple
 User=rustdesk
 WorkingDirectory=/opt/rustdesk
-ExecStart=/opt/rustdesk/hbbs -r anson.dev:21117
+ExecStart=/opt/rustdesk/hbbs -r ansonsajugeorge.online:21117
 Restart=always
 RestartSec=5
 
@@ -657,7 +658,7 @@ sudo tailscale up --ssh
 tailscale status
 ```
 
-#### **NVIDIA GPU Setup for TinyML (RTX 3060)**
+#### **NVIDIA GPU Setup for TinyML (RTX 3060 Mobile/Max-Q)**
 
 ```bash
 # Fedora (recommended approach)
@@ -968,19 +969,14 @@ sudo nano /etc/apt/apt.conf.d/50unattended-upgrades
 ### **Cloudflare DNS Records**
 
 ```dns
-# A Records
-homeserver.anson.dev    A    [SERVER_IP]    Proxied
-nextcloud.anson.dev     A    [SERVER_IP]    Proxied
-static.anson.dev        A    [SERVER_IP]    Proxied
-api.anson.dev           A    [SERVER_IP]    Proxied
-
-# CNAME Records
-www.anson.dev          CNAME  homeserver.anson.dev
-cloud.anson.dev        CNAME  nextcloud.anson.dev
+# Cloudflare Tunnel-backed hostnames
+ansonsajugeorge.online          CNAME  [tunnel-id].cfargotunnel.com    Proxied
+www.ansonsajugeorge.online      CNAME  ansonsajugeorge.online          Proxied
+cloud.ansonsajugeorge.online    CNAME  [tunnel-id].cfargotunnel.com    Proxied
 
 # TXT Records (for verification)
-_dmarc.anson.dev       TXT    "v=DMARC1; p=quarantine; rua=mailto:admin@anson.dev"
-anson.dev              TXT    "v=spf1 include:_spf.google.com ~all"
+_dmarc.ansonsajugeorge.online   TXT    "v=DMARC1; p=quarantine"
+ansonsajugeorge.online          TXT    "v=spf1 include:_spf.google.com ~all"
 ```
 
 ### **Dynamic DNS Update Script**
@@ -1000,7 +996,7 @@ CURRENT_IP=$(curl -s https://ipv4.icanhazip.com)
 curl -X PUT "https://api.cloudflare.com/client/v4/zones/$CF_ZONE_ID/dns_records/$CF_RECORD_ID" \
      -H "Authorization: Bearer $CF_API_TOKEN" \
      -H "Content-Type: application/json" \
-     --data "{\"type\":\"A\",\"name\":\"homeserver.anson.dev\",\"content\":\"$CURRENT_IP\",\"ttl\":1}"
+     --data "{\"type\":\"A\",\"name\":\"ansonsajugeorge.online\",\"content\":\"$CURRENT_IP\",\"ttl\":1}"
 
 echo "DNS updated to $CURRENT_IP"
 ```
@@ -1024,10 +1020,10 @@ echo "DNS updated to $CURRENT_IP"
 
 ```json
 {
-  "host": "homeserver.anson.dev",
+  "host": "ansonsajugeorge.online",
   "port": "21117",
   "key": "your_rustdesk_key",
-  "id_server": "homeserver.anson.dev"
+  "id_server": "ansonsajugeorge.online"
 }
 ```
 
