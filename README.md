@@ -1,12 +1,12 @@
 # ☁️ dev-orbit — Self-Hosted Cloud Platform
 
-**Provider-agnostic single-node platform hosting eight applications under one domain, with
-serverless-GPU inference and a zero-inbound-port security posture.**
+**Eight applications on one CPU-only VPS, with selected inference workloads running on external
+GPUs. No public inbound ports on the host; traffic arrives over an outbound-established tunnel.**
 
 Live at **[ansonsajugeorge.online](https://ansonsajugeorge.online/)**
 
 - **Developer:** Anson Saju George
-- **Host:** Hetzner Cloud VPS (`dev-orbit`), Fedora — deliberately **GPU-less**
+- **Host:** Hetzner Cloud VPS (`dev-orbit`), Fedora — **CPU-only, no GPU**
 - **Focus:** MLOps, platform engineering, containerisation, security hardening, cost control
 
 > This repo began as the documentation for a home server built on a repurposed gaming laptop. The
@@ -51,17 +51,21 @@ Live at **[ansonsajugeorge.online](https://ansonsajugeorge.online/)**
 
 ## ⚡ Engineering notes
 
-**Serverless GPU offload.** Heavy PyTorch/CUDA models run in ephemeral Modal GPU containers that
-spin up per request and tear down on completion. The always-on web tier stays CPU-only and thin —
-FastAPI plus a Modal client, no Torch or CUDA in the image. GPU VRAM returns to zero after every
-job, and there is no always-on GPU to pay for.
+**GPU inference runs off-host.** Heavy PyTorch/CUDA models run on **Modal**, not on the VPS. The
+always-on web tier stays CPU-only and thin — FastAPI plus a Modal client, with no Torch or CUDA in
+the image — so the host never needs a GPU.
+
+⚠️ Container lifetime depends on configuration: Modal may retain warm containers, and
+ContextForge deliberately uses a **keep-warm** Ollama service. Treat GPU capacity as *on demand*,
+not as guaranteed teardown after each job.
 
 **Image slimming.** Moving the model out of the web tier cut the GPU app's production image from
 roughly **4.9 GB to about 430 MB**, since only the API and web layer ship.
 
-**Single-container app packaging.** Each app is one non-root container in which a single FastAPI
-process serves both the REST API and the prebuilt React/Vite SPA, replacing the usual split
-frontend/backend pair. Multi-stage builds; no secrets or model weights in Git or image layers —
+**Single-container app packaging.** The FastAPI-backed apps each run as one non-root container in
+which a single process serves both the REST API and the prebuilt React/Vite SPA, replacing the usual
+split frontend/backend pair. Not every app follows this shape — several are static frontends, and
+Spotter has a Django backend. Multi-stage builds; no secrets or model weights in Git or image layers —
 both are injected at runtime.
 
 **A VRAM-residency bug worth recording.** Running inference in-process left CUDA context and cuDNN
