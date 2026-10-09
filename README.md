@@ -481,13 +481,13 @@ server {
     }
 
     # Deepfake frontend and backend
-    location ^~ /deepfake/ {
+    location ^~ /deepfake-detection/ {
         alias /var/www/deepfake/dist/;
         index index.html;
         try_files $uri $uri/ =404;
     }
 
-    location ^~ /deepfake/api/ {
+    location ^~ /deepfake-detection/api/ {
         proxy_pass http://127.0.0.1:8000/;
         proxy_http_version 1.1;
         proxy_request_buffering off;
