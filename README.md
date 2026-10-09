@@ -1,4 +1,106 @@
-# 🏠 Personal Home Server Infrastructure
+# ☁️ dev-orbit — Self-Hosted Cloud Platform
+
+**Provider-agnostic single-node platform hosting eight applications under one domain, with
+serverless-GPU inference and a zero-inbound-port security posture.**
+
+Live at **[ansonsajugeorge.online](https://ansonsajugeorge.online/)**
+
+- **Developer:** Anson Saju George
+- **Host:** Hetzner Cloud VPS (`dev-orbit`), Fedora — deliberately **GPU-less**
+- **Focus:** MLOps, platform engineering, containerisation, security hardening, cost control
+
+> This repo began as the documentation for a home server built on a repurposed gaming laptop. The
+> applications have since migrated to the cloud VPS described below, and the original build is kept
+> in full under **[Legacy](#-legacy-the-original-hp-omen-home-server)** — it is where every pattern
+> here was first worked out.
+
+---
+
+## 🏗️ Architecture
+
+```
+            Internet
+               │
+      Cloudflare (TLS, CDN)
+               │
+      Cloudflare Tunnel            ← outbound-only; no public inbound ports
+               │
+   ┌───────────▼─────────────┐
+   │   dev-orbit (Hetzner)   │     Fedora · Docker Swarm · Dokploy · Traefik v3
+   │   CPU-only web tier     │
+   └───────────┬─────────────┘
+               │  (per-request)
+        ┌──────▼───────┐
+        │  Modal GPU   │          ← ephemeral containers; torn down after each job
+        └──────────────┘
+```
+
+**Admin plane:** Tailscale mesh VPN only — public SSH is closed.
+
+## 🛠️ Stack
+
+| Layer | Choice |
+|---|---|
+| Orchestration | **Docker Swarm** |
+| Deployment | **Dokploy** — Git-driven continuous deployment, secrets, routing |
+| Reverse proxy | **Traefik v3** — path and subdomain routing |
+| Ingress | **Cloudflare Tunnel** — outbound-only, no public inbound ports |
+| Admin access | **Tailscale** mesh VPN; public SSH closed |
+| GPU compute | **Modal** — serverless, per-request |
+| Apps | FastAPI + React/Vite, single non-root container each |
+
+## ⚡ Engineering notes
+
+**Serverless GPU offload.** Heavy PyTorch/CUDA models run in ephemeral Modal GPU containers that
+spin up per request and tear down on completion. The always-on web tier stays CPU-only and thin —
+FastAPI plus a Modal client, no Torch or CUDA in the image. GPU VRAM returns to zero after every
+job, and there is no always-on GPU to pay for.
+
+**Image slimming.** Moving the model out of the web tier cut the GPU app's production image from
+roughly **4.9 GB to about 430 MB**, since only the API and web layer ship.
+
+**Single-container app packaging.** Each app is one non-root container in which a single FastAPI
+process serves both the REST API and the prebuilt React/Vite SPA, replacing the usual split
+frontend/backend pair. Multi-stage builds; no secrets or model weights in Git or image layers —
+both are injected at runtime.
+
+**A VRAM-residency bug worth recording.** Running inference in-process left CUDA context and cuDNN
+handles resident even after `empty_cache()`. Fixed with per-job subprocess isolation locally
+(load → run → exit) and ephemeral containers in production.
+
+**Security posture.** Zero public inbound ports; TLS terminated at the Cloudflare edge; admin over
+Tailscale only; app containers never publish host ports.
+
+**Method.** Each migration followed a written Application-Build Playbook —
+audit → security audit → baseline → reorganise → secure-by-default → containerise → deploy — so the
+process was repeatable rather than hand-rolled per app.
+
+## 📦 Applications
+
+Eight apps under one apex domain:
+
+| # | App | Compute | GPU |
+|---|---|---|---|
+| 01 | Portfolio (`dev-verse`) | CPU | — |
+| 02 | just-a-blog | CPU (static) | — |
+| 03 | **WMS-RIFE** — video frame interpolation | GPU | Modal (T4) |
+| 04 | **DF-Engine** — deepfake detection | GPU | Modal (T4) |
+| 05 | EEG Seizure — detection demo | CPU (static) | — |
+| 06 | **ContextForge** — hybrid-RAG workbench | GPU (LLM) | Modal (A10G) |
+| 07 | VidyaPaatha — teaching prototype | CPU (static) | — |
+| 08 | Spotter — trip planner | CPU | — |
+
+---
+
+## 📜 Legacy: the original HP OMEN home server
+
+Everything below documents the **first-generation** server: a repurposed **HP OMEN 16 (2022)** laptop
+with an **RTX 3060**, which hosted the portfolio and ML apps on hardware already owned. It is kept in
+full, unedited.
+
+It worked — and it found its ceiling. GPU VRAM capped concurrent ML workloads, storage could not
+expand, and sustained GPU load ran into thermal limits. Those three constraints are why `dev-orbit`
+looks the way it does: GPU on demand instead of always on, and a thin always-on tier.
 
 A **comprehensive home server solution** built on repurposed HP OMEN 16 (2022) hardware, implementing enterprise-grade services and security configurations. This personal project demonstrates full-stack infrastructure deployment, combining cloud services, networking, security hardening, and modern web technologies.
 
